@@ -12,6 +12,20 @@
             <!--begin::End Navbar Links-->
             <ul class="navbar-nav ms-auto">
                 <!--begin::Navbar Search-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if (session()->has('language'))
+                            {{session()->get('language') == 'en' ? 'English' : 'Khmer'}}
+                            @else
+                                English
+                        @endif
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item" href="{{route('change_language','km')}}">Khmer</a></li>
+                        <li><a class="dropdown-item" href="{{route('change_language','en')}}">English</a></li>
+                    </ul>
+                </li>
+
                 <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
                         data-bs-toggle="dropdown"> <img src="{{asset("adminlte/dist/assets/img/user2-160x160.jpg")}}"
                             class="user-image rounded-circle shadow" alt="User Image"> <span
@@ -39,11 +53,25 @@
                         </li>
                         <!--end::Menu Body-->
                         <!--begin::Menu Footer-->
-                        <li class="user-footer"> <a href="#" class="btn btn-default btn-flat">Profile</a> <a href="#"
-                                class="btn btn-default btn-flat float-end">Sign out</a> </li>
+                        <li class="user-footer">
+                             <a href="#" class="btn btn-default btn-flat">Profile</a>
+
+                             <a class="btn btn-default btn-flat float-end" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                 <!-- <a href="#"
+                                class="btn btn-default btn-flat float-end">Sign out</a> -->
+                         </li>
                         <!--end::Menu Footer-->
+
                     </ul>
                 </li>
+
                 <!--end::User Menu Dropdown-->
             </ul>
             <!--end::End Navbar Links-->
