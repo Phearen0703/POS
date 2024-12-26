@@ -37,4 +37,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
+
+    public function username()
+    {
+        session()->flash('status','success');
+        session()->flash('sms',__('lb.Login Successfully'));
+        return 'username';
+    }
 }

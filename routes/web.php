@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['prefix' => '/admin'], function () {
-    Auth::routes(['register' => false]);
+    Auth::routes(['register' => false, 'logout'=>false]);
+    Route::post('/logout', 'App\Http\Controllers\Auth\LogoutControllers@index')->name('logout');
 });
 
     // change lang 

@@ -12,7 +12,7 @@
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item"> <a href="{{route('admin.home')}}" class="nav-link {{request()->route()->getName()=='admin.home' ? 'active' : ''}}"> <i class="nav-icon bi bi-house "></i>
-                        <p>Home page</p>
+                        <p>{{__('lb.Home Page')}}</p>
                     </a> </li>
 
                     @php
@@ -25,17 +25,17 @@
                 <li class="nav-item {{in_array(request()->route()->getName(),$productmanagements) ? 'menu-open' : ''}}">
                     <a href="#" class="nav-link {{in_array(request()->route()->getName(),$productmanagements) ? 'active' : ''}}"> <i class="nav-icon bi bi-speedometer"></i>
                         <p>
-                           Prodcut Management
+                        {{__('lb.Prodcut Management')}}
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
 
                     <li class="nav-item"> <a href="{{route('admin.product.category')}}" class="nav-link {{request()->route()->getName()=='admin.product.category' ? 'active' : ''}}"> <i class="nav-icon bi bi-house "></i>
-                        <p>Product Category</p>
+                        <p>{{__('lb.Product Category')}}</p>
                     </a> </li>
                     <li class="nav-item"> <a href="{{route('admin.product')}}" class="nav-link {{request()->route()->getName()=='admin.product' ? 'active' : ''}}"> <i class="nav-icon bi bi-house "></i>
-                        <p>Product Page</p>
+                        <p>{{__('lb.Product Page')}}</p>
                     </a> </li>
                     </ul>
                 </li>
