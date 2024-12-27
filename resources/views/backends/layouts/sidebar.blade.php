@@ -12,7 +12,7 @@
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item"> <a href="{{route('admin.home')}}" class="nav-link {{request()->route()->getName()=='admin.home' ? 'active' : ''}}"> <i class="nav-icon bi bi-house "></i>
-                        <p>{{__('lb.Home Page')}}</p>
+                        <p>{{__('Home Page')}}</p>
                     </a> </li>
 
                     @php
@@ -25,17 +25,41 @@
                 <li class="nav-item {{in_array(request()->route()->getName(),$productmanagements) ? 'menu-open' : ''}}">
                     <a href="#" class="nav-link {{in_array(request()->route()->getName(),$productmanagements) ? 'active' : ''}}"> <i class="nav-icon bi bi-speedometer"></i>
                         <p>
-                        {{__('lb.Prodcut Management')}}
+                        {{__('Prodcut Management')}}
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
 
                     <li class="nav-item"> <a href="{{route('admin.product.category')}}" class="nav-link {{request()->route()->getName()=='admin.product.category' ? 'active' : ''}}"> <i class="nav-icon bi bi-house "></i>
-                        <p>{{__('lb.Product Category')}}</p>
+                        <p>{{__('Product Category')}}</p>
                     </a> </li>
                     <li class="nav-item"> <a href="{{route('admin.product')}}" class="nav-link {{request()->route()->getName()=='admin.product' ? 'active' : ''}}"> <i class="nav-icon bi bi-house "></i>
-                        <p>{{__('lb.Product Page')}}</p>
+                        <p>{{__('Product Page')}}</p>
+                    </a> </li>
+                    </ul>
+                </li>
+
+
+
+                @php
+                        $settingManagement = [
+                            'admin.role',
+
+                            ]
+                    @endphp
+
+                <li class="nav-item {{in_array(request()->route()->getName(),$settingManagement) ? 'menu-open' : ''}}">
+                    <a href="#" class="nav-link {{in_array(request()->route()->getName(),$settingManagement) ? 'active' : ''}}"> <i class="bi bi-gear"></i></i>
+                        <p>
+                        {{__('Setting')}}
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                    <li class="nav-item"> <a href="{{route('admin.role')}}" class="nav-link {{request()->route()->getName()=='admin.role' ? 'active' : ''}}"> <i class="bi bi-person-check"></i>
+                        <p>{{__('Role')}}</p>
                     </a> </li>
                     </ul>
                 </li>
