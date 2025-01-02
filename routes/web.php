@@ -24,6 +24,12 @@ Route::group(['namespace'=>'App\Http\Controllers\Backends', 'prefix'=>'/admin'],
 //role
 
 Route::get('/role','RoleController@index')->name('admin.role');
+Route::get('/role/{role_id}/edit','RoleController@edit')->name('admin.role.edit');
+Route::post('/role/{role_id}/update','RoleController@update')->name('admin.role.update');
+Route::get('/role/{role_id}/delete','RoleController@delete')->name('admin.role.delete');
+Route::get('/role/create','RoleController@create')->name('admin.role.create');
+Route::post('/role/store','RoleController@store')->name('admin.role.store');
+
 
 });
 
