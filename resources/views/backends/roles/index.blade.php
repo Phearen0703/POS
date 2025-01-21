@@ -27,19 +27,28 @@
                                 <td>{{$index + 1}}</td>
                                 <td>{{$role -> name}}</td>
                                 <td>
-                                    <a href="{{ route('admin.role.edit', $role->id)}}" class="btn btn-sm btn-success"><i class="bi bi-pencil-square"></i> {{__(__('Edit'))}}</a>
-                                    <a href="{{ route('admin.role.delete', $role->id)}}" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></i> {{__(__('Delete'))}}</a>
-                                    
+                                    <a href="{{ route('admin.role.edit', $role->id) }}" class="btn btn-sm btn-success">
+                                        <i class="bi bi-pencil-square"></i> {{ __('Edit') }}
+                                    </a>
+
+                                        @php
+                                            $btnDelete = '<div class="d-flex justify-content-center gap-2">';
+                                            $btnDelete .= '<a href="' . route('admin.role.delete', $role->id) . '" class="btn btn-sm btn-danger">' . __('Yes') . '</a>';
+                                            $btnDelete .= '<span class="btn btn-sm btn-dark">' . __('No') . '</span>';
+                                            $btnDelete .= '</div>';
+                                        @endphp
+
+
                                     <button type="button" 
-                                            class="btn btn-danger" 
-                                            data-bs-toggle="popover" 
+                                            class="btn btn-sm btn-danger text-center pop" 
+                                            data-bs-toggle="popover"
+                                            data-trigger="focus" 
+                                            title="{{ __('Are you sure ?') }}" 
                                             data-bs-html="true" 
-                                            data-bs-content='
-                                                <p>Are you sure you want to delete this item?</p>
-                                                <button class="btn btn-danger btn-sm confirm-delete">Yes</button>
-                                                <button class="btn btn-secondary btn-sm cancel-delete">No</button>'>
-                                        Delete
+                                            data-bs-content="{{ $btnDelete }}"><i class="bi bi-trash"></i> 
+                                        {{ __('Delete') }}
                                     </button>
+                                </td>
 
                                 </td>
                             </tr>
@@ -54,9 +63,27 @@
 
 @push('js')
 <script>
-   $(function(){
-    $'.pop'
-   })
+   document.addEventListener('DOMContentLoaded', function () {
+       const popoverElements = document.querySelectorAll('.pop');
+       popoverElements.forEach(function (popoverElement) {
+           new bootstrap.Popover(popoverElement, {
+               container: 'body',
+               animation: true,
+               trigger: 'click',
+               placement: 'right',
+               html: true
+           });
+       });
 
+       document.addEventListener('click', function (event) {
+           popoverElements.forEach(function (popoverElement) {
+               if (!popoverElement.contains(event.target)) {
+                   const popoverInstance = bootstrap.Popover.getInstance(popoverElement);
+                   if (popoverInstance) popoverInstance.hide();
+               }
+           });
+       });
+   });
 </script>
 @endpush
+

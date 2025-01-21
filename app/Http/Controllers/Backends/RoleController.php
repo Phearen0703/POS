@@ -52,5 +52,15 @@ class RoleController extends Controller
             return redirect()->route('admin.role')->with(['status'=>'warning','sms'=>__('No Update')]);
         }
     }
+
+    public function delete($role_id){
+        $d = DB::table('roles')->where('id', $role_id)->delete();
+
+        if($d == true){
+            return redirect()->route('admin.role')->with(['status'=> 'success', 'sms' => __('Delete Successfully')]);
+        }else{
+            return redirect()->route('admin.role')->with(['status'=> 'success', 'sms' => __('Delete Unsuccessfully')]);
+        }
+    }
  
 }
