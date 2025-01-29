@@ -6,29 +6,52 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use Hash;
+use Validator;
 class UserController extends Controller
 {
     public function index(){
 
-        $data['users'] = DB::table('users')->paginate(10);
+        $data['users'] = DB::table('users')
+        ->join('roles', 'roles.id', 'users.role_id')
+        ->select('users.*', 'roles.name as role_name')
+        
+        ->paginate(10);
 
         return view('backends.users.index',$data);
     }
 
     public function create(){
-        return view('backends.users.create');
+
+        $data['roles'] = DB::table('roles')->get();
+        return view('backends.users.create',$data);
     }
 
     public function store(Request $r){
 
+        $vilidation = validator::make($r->all(),[
+            'name' => 'required',
+            'username' => 'required',
+            'password' => 'required|min:8',
+            'role_id' => 'required|numeric'
+
+        ]);
+
+        if($vilidation->fails()){
+            return redirect()->route('admin.user')->with(['status'=>'errors', 'data' => $vilidation->errors()]);
+        }
+
         $name = $r->name;
         $username = $r->username;
         $password = Hash::make($r->password);
+        $email = $r->email;
+        $role_id = $r->role_id;
 
         $i = DB::table('users')->insert([
             'name' => $name,
+            'role_id' => $role_id,
             'username' => $username,
             'password' => $password,
+            'email' => $email,
             'created_at' => date('Y-m-d-H:i:s')
         ]);
 
@@ -41,6 +64,7 @@ class UserController extends Controller
 
     public function edit($user_id){
         $data['user'] = DB::table('users')->find($user_id);
+        $data['roles'] = DB::table('roles')->get();
 
         return view('backends.users.edit', $data);
     }

@@ -1,39 +1,45 @@
 @extends('backends.layouts.master')
 
 @section('title')
-    role page
+    User page
 @endsection
 
 @section('content')
     <div class="card">
         <div class="card-header text-primary">
-            <h2><i class="bi bi-person-check"></i> {{__('Role')}}</h2>
+            <h2><i class="bi bi-person"></i> {{__('user')}}</h2>
         </div>
         <div class="card-header">
-            <a href="{{route('admin.role.create')}}" class="btn btn-primary "><i class="bi bi-plus"></i> {{__('Create')}}</a>
+            <a href="{{route('admin.user.create')}}" class="btn btn-primary "><i class="bi bi-plus"></i> {{__('Create')}}</a>
             <div class="table-responsive my-2">
                 <table class="table table-sm table-hover table-bordered text-center">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>{{__('Name')}}</th>
+                            <th>{{__('Role')}}</th>
+                            <th>{{__('Username')}}</th>
+                            <th>{{__('Email')}}</th>
                             <th>{{__('Action')}}</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($roles as $index => $role)
+                        @foreach ($users as $index => $user)
                             <tr>
                                 <td>{{$index + 1}}</td>
-                                <td>{{$role -> name}}</td>
+                                <td class="text-start">{{$user -> name}}</td>
+                                <td>{{$user -> role_name}}</td>
+                                <td>{{$user -> username}}</td>
+                                <td>{{$user -> email}}</td>
                                 <td>
-                                    <a href="{{ route('admin.role.edit', $role->id) }}" class="btn btn-sm btn-success">
+                                    <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-sm btn-success">
                                         <i class="bi bi-pencil-square"></i> {{ __('Edit') }}
                                     </a>
 
                                         @php
                                             $btnDelete = '<div class="d-flex justify-content-center gap-2">';
-                                            $btnDelete .= '<a href="' . route('admin.role.delete', $role->id) . '" class="btn btn-sm btn-danger">' . __('Yes') . '</a>';
+                                            $btnDelete .= '<a href="' . route('admin.user.delete', $user->id) . '" class="btn btn-sm btn-danger">' . __('Yes') . '</a>';
                                             $btnDelete .= '<span class="btn btn-sm btn-dark">' . __('No') . '</span>';
                                             $btnDelete .= '</div>';
                                         @endphp
@@ -58,7 +64,7 @@
 
                 <div class="row">
                     <div class="col">
-                        {{$roles->links('pagination::bootstrap-5')}}
+                        {{$users->links('pagination::bootstrap-5')}}
                     </div>
                 </div>
 

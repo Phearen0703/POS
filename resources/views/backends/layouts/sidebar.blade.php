@@ -45,7 +45,9 @@
                 @php
                         $settingManagement = [
                             'admin.role',
-                            'admin.role.create'
+                            'admin.role.create',
+                            'admin.user',
+                            'admin.user.create'
 
                             ]
                     @endphp
@@ -64,6 +66,15 @@
                             request()->route()->getName()=='admin.role.create'  ? 'active' : ''
                             }}"> <i class="bi bi-arrow-right-square-fill"></i></i>
                         <p>{{__('Role')}}</p>
+                    </a> </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+
+                    <li class="nav-item"> <a href="{{route('admin.user')}}" class="nav-link {{
+                            request()->route()->getName()=='admin.user' ||
+                            request()->route()->getName()=='admin.user.create'  ? 'active' : ''
+                            }}"> <i class="bi bi-arrow-right-square-fill"></i></i>
+                        <p>{{__('User')}}</p>
                     </a> </li>
                     </ul>
                 </li>
