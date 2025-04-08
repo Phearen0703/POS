@@ -70,13 +70,41 @@ class UserController extends Controller
     }
 
     public function update(Request $r, $user_id){
+
+        $validation = validator::make($r->all(),[
+            'name' => 'required',
+            'username' => 'required',
+            'role_id' => 'required|numeric'
+        ]);
+        if($validation->fails()){
+            return redirect()->route('admin.user')->with(['status'=>'errors', 'data' => $validation->errors()]);
+        }
+
         $data = [
             'name'=>$r->name,
             'username' => $r->username,
+            'email' => $r->email,
+            'role_id' => $r->role_id,
+            'status' => $r->status,
         ];
 
+        $oldUer = DB::table('users')->find($user_id);
+        if($oldUer->username != $r->username){
+            $find = DB::table('users')->where('username', $r->username)->first();
+            if($find){
+                return redirect()->route('admin.user')->with(['status'=>'warning', 'sms' => __('Username Already Exist')]);
+            }
+            // $data['username'] = $r->username;
+        }
+
         if($r-> password){
-            $data['password']= Hash::make($r->password);
+            $validation = validator::make($r->all(),[
+                'password' => 'required|min:8'
+            ]);
+            if($validation->fails()){
+                return redirect()->route('admin.user')->with(['status'=>'errors', 'data' => $validation->errors()]);
+            }
+            $data['password'] = Hash::make($r->password);
         }
 
         $u = DB::table('users')->where('id', $user_id)->update($data);

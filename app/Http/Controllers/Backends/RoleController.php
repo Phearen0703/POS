@@ -54,6 +54,12 @@ class RoleController extends Controller
     }
 
     public function delete($role_id){
+
+        $find = DB::table('users')->where('role_id', $role_id)->exists();
+        if($find){
+            return redirect()->route('admin.role')->with(['status'=>'warning', 'sms'=>__('This role is used by user! Can not delete, please delete user first')]);
+        }
+
         $d = DB::table('roles')->where('id', $role_id)->delete();
 
         if($d == true){
@@ -61,6 +67,12 @@ class RoleController extends Controller
         }else{
             return redirect()->route('admin.role')->with(['status'=> 'success', 'sms' => __('Delete Unsuccessfully')]);
         }
+    }
+
+    public function permission($role_id){
+       
+
+        return view('backends.roles.permissions.index');
     }
  
 }

@@ -20,6 +20,7 @@
                             <th>{{__('Role')}}</th>
                             <th>{{__('Username')}}</th>
                             <th>{{__('Email')}}</th>
+                            <th>{{__('Status')}}</th>
                             <th>{{__('Action')}}</th>
 
                         </tr>
@@ -32,6 +33,14 @@
                                 <td>{{$user -> role_name}}</td>
                                 <td>{{$user -> username}}</td>
                                 <td>{{$user -> email}}</td>
+                                <td>
+                                    @if ($user->status == 1)
+                                        <span class="badge bg-success">{{__('Active')}}</span>
+                                    @else
+                                        <span class="badge bg-danger">{{__('Inactive')}}</span>
+                                    
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-sm btn-success">
                                         <i class="bi bi-pencil-square"></i> {{ __('Edit') }}

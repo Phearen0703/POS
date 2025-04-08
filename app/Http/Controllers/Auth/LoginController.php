@@ -4,44 +4,50 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use DB;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = '/admin';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
     }
 
     public function username()
     {
-        session()->flash('status','success');
-        session()->flash('sms',__('lb.Login Successfully'));
-        return 'username';
+        return 'username'; // Only return the login field name
+    }
+
+    public function login(Request $request)
+    {
+        // Validate input
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        // Check if user exists and is active
+        $user = DB::table('users')->where('username', $request->username)->first();
+
+        if (!$user) {
+            return back()->with('status', 'error')->with('sms', 'User not found.');
+        }
+
+        if ($user->status == 0) {
+            return back()->with('status', 'error')->with('sms', 'Your account is inactive! Please contact admin.');
+        }
+
+        // Try to login
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            return redirect()->intended($this->redirectTo)->with('status', 'success')->with('sms', 'Login successfully!');
+        }
+
+        return back()->with('status', 'error')->with('sms', 'Invalid credentials.');
     }
 }

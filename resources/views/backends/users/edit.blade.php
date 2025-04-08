@@ -24,6 +24,13 @@
                                 <label for="username">{{__('Username')}} <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="username" value="{{$user->username}}" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="status">{{__('Status')}} <span class="text-danger">*</span></label>
+                                <select name="status" id="status" class="form-select" required>
+                                    <option value="0" {{$user->status == 0 ? 'selected' : ''}}> {{__('Inactive')}} </option>
+                                    <option value="1" {{$user->status == 1 ? 'selected' : ''}}>{{__('Active')}}</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-lg-6 col-12">
                         <div class="mb-3">
@@ -35,13 +42,13 @@
                                 <select name="role_id" id="role" class="form-select" required>
                                     <option value="">{{__('Please Select')}}</option>
                                     @foreach ($roles as $role)
-                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                        <option value="{{$role->id}}" {{$role->id == $user->role_id ? 'selected' : ''}}>{{$role->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="password">{{__('Password')}}<span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" name="password" required>
+                                <label for="password">{{__('Password')}}<span class="text-danger"></span></label>
+                                <input type="password" class="form-control" name="password">
                             </div>
 
                         </div>

@@ -2,6 +2,8 @@
 
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\ActiveUser;
+
 
 
 
@@ -16,7 +18,7 @@ Route::group(['prefix' => '/admin'], function () {
     Route::get('/change-language/{lang}','App\Http\Controllers\LanguageController@SwitchLang')->name('change_language');
 
 //backend or admin
-Route::group(['namespace'=>'App\Http\Controllers\Backends', 'prefix'=>'/admin'],function(){
+Route::group(['namespace'=>'App\Http\Controllers\Backends', 'prefix'=>'/admin', 'middleware'=>[ActiveUser::class]], function () {
     Route::get('/', 'HomeController@index')->name('admin.home');
     Route::get('/product', 'ProductController@index')->name('admin.product');
     Route::get('/product/category', 'ProductCategoryController@index')->name('admin.product.category');
@@ -29,6 +31,16 @@ Route::post('/role/{role_id}/update','RoleController@update')->name('admin.role.
 Route::get('/role/{role_id}/delete','RoleController@delete')->name('admin.role.delete');
 Route::get('/role/create','RoleController@create')->name('admin.role.create');
 Route::post('/role/store','RoleController@store')->name('admin.role.store');
+
+//role permission
+Route::get('/role/{role_id}/permission','RoleController@permission')->name('admin.role.permission');
+
+
+// permission
+Route::get('/permission','PermissionController@index')->name('admin.permission');
+Route::get('/permission/create','PermissionController@create')->name('admin.permission.create');
+Route::post('/permission/store','PermissionController@store')->name('admin.permission.store');
+
 
 //user
 Route::get('/user', 'UserController@index')->name('admin.user');
