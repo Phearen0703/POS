@@ -27,8 +27,31 @@
                     @forelse($permissions as $index => $per)
                         <tr>
                             <td>{{$index + 1}}</td>
-                            <td>{{$permission->name}}</td>
-                            <td>{{$permission->key}}</td>
+                            <td>{{$per->name}}</td>
+                            <td>{{$per->alias}}</td>
+                            <td>
+                                <a href="{{ route('admin.permission.edit', base64_encode($per->id)) }}" class="btn btn-sm btn-success">
+                                    <i class="bi bi-pencil-square"></i> {{ __('Edit') }}
+                                </a>
+
+                                    @php
+                                        $btnDelete = '<div class="d-flex justify-content-center gap-2">';
+                                        $btnDelete .= '<a href="' . route('admin.permission.delete', $per->id) . '" class="btn btn-sm btn-danger">' . __('Yes') . '</a>';
+                                        $btnDelete .= '<span class="btn btn-sm btn-dark">' . __('No') . '</span>';
+                                        $btnDelete .= '</div>';
+                                    @endphp
+
+
+                                <button type="button" 
+                                        class="btn btn-sm btn-danger text-center pop" 
+                                        data-bs-toggle="popover"
+                                        data-trigger="focus" 
+                                        title="{{ __('Are you sure ?') }}" 
+                                        data-bs-html="true" 
+                                        data-bs-content="{{ $btnDelete }}"><i class="bi bi-trash"></i> 
+                                    {{ __('Delete') }}
+                                </button>
+                            </td>
                         </tr>
                     @empty  
                         <tr>
@@ -44,4 +67,36 @@
 @endsection
 
 
+@push('js')
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+       const popoverElements = document.querySelectorAll('.pop');
+       popoverElements.forEach(function (popoverElement) {
+           new bootstrap.Popover(popoverElement, {
+               container: 'body',
+               animation: true,
+               trigger: 'click',
+               placement: 'right',
+               html: true
+           });
+       });
 
+       document.addEventListener('click', function (event) {
+           popoverElements.forEach(function (popoverElement) {
+               if (!popoverElement.contains(event.target)) {
+                   const popoverInstance = bootstrap.Popover.getInstance(popoverElement);
+                   if (popoverInstance) popoverInstance.hide();
+               }
+           });
+       });
+   });
+</script>
+@endpush
+@push('css')
+<style>
+    .pagination{
+        justify-content: end;
+    }
+
+</style>
+@endpush

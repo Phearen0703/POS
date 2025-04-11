@@ -34,12 +34,16 @@ Route::post('/role/store','RoleController@store')->name('admin.role.store');
 
 //role permission
 Route::get('/role/{role_id}/permission','RoleController@permission')->name('admin.role.permission');
+Route::get('/role/{role_id}/permission/update','RoleController@updatePermission')->name('admin.role.permission.update');
 
 
 // permission
 Route::get('/permission','PermissionController@index')->name('admin.permission');
 Route::get('/permission/create','PermissionController@create')->name('admin.permission.create');
 Route::post('/permission/store','PermissionController@store')->name('admin.permission.store');
+Route::get('/permission/{permission_id}/edit','PermissionController@edit')->name('admin.permission.edit');
+Route::get('/permission/{permission_id}/delete','PermissionController@delete')->name('admin.permission.delete');
+Route::post('/permission/{permission_id}/update','PermissionController@update')->name('admin.permission.update');
 
 
 //user
