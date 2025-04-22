@@ -19,6 +19,7 @@ class ActiveUser
     {
 
         $find = DB::table('users')->find(auth()->user()->id);
+
         if ($find->status == 0) {
 
             Auth::logout();

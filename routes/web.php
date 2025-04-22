@@ -25,12 +25,12 @@ Route::group(['namespace'=>'App\Http\Controllers\Backends', 'prefix'=>'/admin', 
 
 
 //role
-Route::get('/role','RoleController@index')->name('admin.role');
-Route::get('/role/{role_id}/edit','RoleController@edit')->name('admin.role.edit');
-Route::post('/role/{role_id}/update','RoleController@update')->name('admin.role.update');
-Route::get('/role/{role_id}/delete','RoleController@delete')->name('admin.role.delete');
-Route::get('/role/create','RoleController@create')->name('admin.role.create');
-Route::post('/role/store','RoleController@store')->name('admin.role.store');
+Route::get('/role','RoleController@index')->name('admin.role')->middleware('UserPermission:role,view');
+Route::get('/role/{role_id}/edit','RoleController@edit')->name('admin.role.edit')->middleware('UserPermission:role,edit');
+Route::post('/role/{role_id}/update','RoleController@update')->name('admin.role.update')->middleware('UserPermission:role,edit');
+Route::get('/role/{role_id}/delete','RoleController@delete')->name('admin.role.delete')->middleware('UserPermission:role,delete');
+Route::get('/role/create','RoleController@create')->name('admin.role.create')->middleware('UserPermission:role,create');
+Route::post('/role/store','RoleController@store')->name('admin.role.store')->middleware('UserPermission:role,create');
 
 //role permission
 Route::get('/role/{role_id}/permission','RoleController@permission')->name('admin.role.permission');
@@ -47,13 +47,20 @@ Route::post('/permission/{permission_id}/update','PermissionController@update')-
 
 
 //user
-Route::get('/user', 'UserController@index')->name('admin.user');
-Route::get('/user/{user_id}/edit', 'UserController@edit')->name('admin.user.edit');
-Route::post('/user/{user_id}/update', 'UserController@update')->name('admin.user.update');
-Route::get('/user/{user_id}/delete', 'UserController@delete')->name('admin.user.delete');
-Route::get('/user/create', 'UserController@create')->name('admin.user.create');
-Route::post('/user/store', 'UserController@store')->name('admin.user.store');
+Route::get('/user', 'UserController@index')->name('admin.user')->middleware('UserPermission:user,view');
+Route::get('/user/{user_id}/edit', 'UserController@edit')->name('admin.user.edit')->middleware('UserPermission:user,edit');
+Route::post('/user/{user_id}/update', 'UserController@update')->name('admin.user.update')->middleware('UserPermission:user,edit');
+Route::get('/user/{user_id}/delete', 'UserController@delete')->name('admin.user.delete')->middleware('UserPermission:user,delete');
+Route::get('/user/create', 'UserController@create')->name('admin.user.create')->middleware('UserPermission:user,create');
+Route::post('/user/store', 'UserController@store')->name('admin.user.store')->middleware('UserPermission:user,create');
 
+
+
+
+//no permission
+Route::get('/admin.no_permission', function () {
+    return view('backends.no_permission');
+})->name('admin.no_permission');
 
 
 });

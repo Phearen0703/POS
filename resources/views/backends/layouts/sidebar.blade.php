@@ -14,8 +14,8 @@
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item"> <a href="{{route('admin.permission')}}"
-                        class="nav-link {{request()->route()->getName() == 'admin.permission' ? 'active' : ''}}"> 
-                            <i class="bi bi-person-check"></i>
+                        class="nav-link {{request()->route()->getName() == 'admin.permission' ? 'active' : ''}}">
+                        <i class="bi bi-person-check"></i>
                         <p>{{__('Permission')}}</p>
                     </a> </li>
 
@@ -32,7 +32,8 @@
                     ]
                 @endphp
 
-                <li class="nav-item {{in_array(request()->route()->getName(), $productmanagements) ? 'menu-open' : ''}}">
+                <li
+                    class="nav-item {{in_array(request()->route()->getName(), $productmanagements) ? 'menu-open' : ''}}">
                     <a href="#"
                         class="nav-link {{in_array(request()->route()->getName(), $productmanagements) ? 'active' : ''}}">
                         <i class="nav-icon bi bi-speedometer"></i>
@@ -43,20 +44,29 @@
                     </a>
                     <ul class="nav nav-treeview">
 
-                        <li class="nav-item"> <a href="{{route('admin.product.category')}}"
-                                class="nav-link {{request()->route()->getName() == 'admin.product.category' ? 'active' : ''}}">
-                                <i class="nav-icon bi bi-house "></i>
-                                <p>{{__('Product Category')}}</p>
-                            </a> </li>
+                        @if (checkPermission('prodcuct_category', 'view'))
+
+
+                            <li class="nav-item"> <a href="{{route('admin.product.category')}}"
+                                    class="nav-link {{request()->route()->getName() == 'admin.product.category' ? 'active' : ''}}">
+                                    <i class="nav-icon bi bi-house "></i>
+                                    <p>{{__('Product Category')}}</p>
+                                </a> </li>
+
+                        @endif
+                        
+                        @if(checkPermission('product', 'view'))
                         <li class="nav-item"> <a href="{{route('admin.product')}}"
-                                class="nav-link {{request()->route()->getName() == 'admin.product' ? 'active' : ''}}"> <i
-                                    class="nav-icon bi bi-house "></i>
+                                class="nav-link {{request()->route()->getName() == 'admin.product' ? 'active' : ''}}">
+                                <i class="nav-icon bi bi-house "></i>
                                 <p>{{__('Product Page')}}</p>
                             </a> </li>
+                        @endif
+
                     </ul>
                 </li>
 
-                
+
                 @php
                     $settingManagement = [
                         'admin.role',
@@ -79,6 +89,8 @@
                     </a>
                     <ul class="nav nav-treeview">
 
+                        @if (checkPermission('role', 'view'))
+
                         <li class="nav-item"> <a href="{{route('admin.role')}}" class="nav-link {{
                                 request()->route()->getName() == 'admin.role' ||
                                 request()->route()->getName() == 'admin.role.create' ||
@@ -86,8 +98,11 @@
                             }}"> <i class="bi bi-arrow-right-square-fill"></i></i>
                                 <p>{{__('Role')}}</p>
                             </a> </li>
+                        @endif
                     </ul>
                     <ul class="nav nav-treeview">
+
+                        @if (checkPermission('user', 'view'))
 
                         <li class="nav-item"> <a href="{{route('admin.user')}}" class="nav-link {{
                                 request()->route()->getName() == 'admin.user' ||
@@ -95,6 +110,9 @@
                             }}"> <i class="bi bi-arrow-right-square-fill"></i></i>
                                 <p>{{__('User')}}</p>
                             </a> </li>
+
+                        @endif
+
                     </ul>
                 </li>
             </ul>

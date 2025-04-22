@@ -10,6 +10,9 @@ use DB;
 class RoleController extends Controller
 {
     public function index(){
+      
+
+
 
         $data['roles'] = DB::table('roles')->paginate(10);
 
