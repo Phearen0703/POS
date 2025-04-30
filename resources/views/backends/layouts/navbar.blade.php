@@ -27,13 +27,13 @@
                 </li>
 
                 <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
-                        data-bs-toggle="dropdown"> <img src="{{asset("adminlte/dist/assets/img/user2-160x160.jpg")}}"
+                        data-bs-toggle="dropdown"> <img src="{{asset(userAuth()->photo)}}"
                             class="user-image rounded-circle shadow" alt="User Image"> <span
                             class="d-none d-md-inline">{{userAuth()->name}}</span> </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                         <!--begin::User Image-->
                         <li class="user-header text-bg-primary"> <img
-                                src="{{asset(path: 'adminlte/dist/assets/img/user2-160x160.jpg')}}"
+                                src="{{asset(userAuth()->photo)}}"
                                 class="rounded-circle shadow" alt="User Image">
                             <p>
                                 Alexander Pierce - Web Developer

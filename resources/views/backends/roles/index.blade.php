@@ -10,7 +10,11 @@
             <h2><i class="bi bi-person-check"></i> {{__('Role')}}</h2>
         </div>
         <div class="card-header">
-            <a href="{{route('admin.role.create')}}" class="btn btn-primary "><i class="bi bi-plus"></i> {{__('Create')}}</a>
+
+            @if (checkPermission('role','create'))
+                <a href="{{route('admin.role.create')}}" class="btn btn-primary "><i class="bi bi-plus"></i> {{__('Create')}}</a>
+            @endif
+           
             <div class="table-responsive my-2">
                 <table class="table table-sm table-hover table-bordered text-center">
                     <thead>

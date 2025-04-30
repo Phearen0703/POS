@@ -11,11 +11,14 @@ class UserController extends Controller
 {
     public function index(){
 
+
         $data['users'] = DB::table('users')
-        ->join('roles', 'roles.id', 'users.role_id')
-        ->select('users.*', 'roles.name as role_name')
-        
-        ->paginate(10);
+        ->join('roles', 'roles.id', 'users.role_id');
+        if(auth()->user()->role_id != 1){
+            $data['users'] = $data['users']->where('roles.id', '!=', 1);
+        }
+        $data['users'] = $data['users']->select('users.*', 'roles.name as role_name')->paginate(10);
+
 
         return view('backends.users.index',$data);
     }
@@ -63,6 +66,11 @@ class UserController extends Controller
     }
 
     public function edit($user_id){
+
+        if(auth()->user()->role_id != 1 && $user_id == 3 ){
+            return redirect()->route('admin.user')->with(['status'=>'warning', 'sms' => __('You do not have permission to access this page!')]);
+        }
+
         $data['user'] = DB::table('users')->find($user_id);
         $data['roles'] = DB::table('roles')->get();
 
@@ -70,6 +78,7 @@ class UserController extends Controller
     }
 
     public function update(Request $r, $user_id){
+
 
         $validation = validator::make($r->all(),[
             'name' => 'required',
@@ -106,6 +115,13 @@ class UserController extends Controller
             }
             $data['password'] = Hash::make($r->password);
         }
+
+
+        if($r->hasFile('photo')){
+            $data['photo'] = $r->file('photo')->store('images/photo','custom');
+  
+        }
+
 
         $u = DB::table('users')->where('id', $user_id)->update($data);
         if($u == true){

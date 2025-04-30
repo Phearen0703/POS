@@ -13,11 +13,13 @@
         <nav class="mt-2">
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
-                <li class="nav-item"> <a href="{{route('admin.permission')}}"
+                @if (auth()->user()->role_id == 1)
+                    <li class="nav-item"> <a href="{{route('admin.permission')}}"
                         class="nav-link {{request()->route()->getName() == 'admin.permission' ? 'active' : ''}}">
                         <i class="bi bi-person-check"></i>
                         <p>{{__('Permission')}}</p>
                     </a> </li>
+                @endif
 
                 <li class="nav-item"> <a href="{{route('admin.home')}}"
                         class="nav-link {{request()->route()->getName() == 'admin.home' ? 'active' : ''}}"> <i
