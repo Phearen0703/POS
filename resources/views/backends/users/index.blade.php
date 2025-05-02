@@ -20,6 +20,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>{{__('Photo')}}</th>
                             <th>{{__('Name')}}</th>
                             <th>{{__('Role')}}</th>
                             <th>{{__('Username')}}</th>
@@ -29,10 +30,13 @@
 
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="vertical-align: middle">
                         @foreach ($users as $index => $user)
                                         <tr>
                                             <td>{{$index + 1}}</td>
+                                            <td>
+                                                <img src="{{asset($user->photo)}}" alt="user profile" class="rounded-circle" width="50px" height="50px">
+                                            </td>
                                             <td class="text-start">{{$user->name}}</td>
                                             <td>{{$user->role_name}}</td>
                                             <td>{{$user->username}}</td>

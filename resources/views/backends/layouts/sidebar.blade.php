@@ -76,6 +76,8 @@
                         'admin.user',
                         'admin.user.create',
                         'admin.role.permission',
+                        'admin.company',
+                        'admin.company.create',
 
                     ]
                 @endphp
@@ -111,6 +113,15 @@
                                 request()->route()->getName() == 'admin.user.create' ? 'active' : ''
                             }}"> <i class="bi bi-arrow-right-square-fill"></i></i>
                                 <p>{{__('User')}}</p>
+                            </a> </li>
+
+                        @endif
+                        @if (checkPermission('company', 'view'))
+
+                        <li class="nav-item"> <a href="{{route('admin.company')}}" class="nav-link {{
+                                request()->route()->getName() == 'admin.company' ? 'active' : ''
+                            }}"> <i class="bi bi-buildings-fill"></i></i>
+                                <p>{{__('Company')}}</p>
                             </a> </li>
 
                         @endif

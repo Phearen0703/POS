@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use Hash;
 use Validator;
+use Storage;
 class UserController extends Controller
 {
     public function index(){
@@ -25,7 +26,7 @@ class UserController extends Controller
 
     public function create(){
 
-        $data['roles'] = DB::table('roles')->get();
+        $data['roles'] = DB::table('roles')->where('id','!=', auth()->user()->role_id == 1 ? null : 1)->get();
         return view('backends.users.create',$data);
     }
 
@@ -36,6 +37,8 @@ class UserController extends Controller
             'username' => 'required',
             'password' => 'required|min:8',
             'role_id' => 'required|numeric'
+
+
 
         ]);
 
@@ -49,13 +52,15 @@ class UserController extends Controller
         $email = $r->email;
         $role_id = $r->role_id;
 
+
         $i = DB::table('users')->insert([
             'name' => $name,
             'role_id' => $role_id,
             'username' => $username,
             'password' => $password,
             'email' => $email,
-            'created_at' => date('Y-m-d-H:i:s')
+            'created_at' => date('Y-m-d-H:i:s'),
+            'photo' => $r->hasFile('photo') ? $r->file('photo')->store('images/photo','custom') : null,
         ]);
 
         if($i == true){
@@ -72,7 +77,7 @@ class UserController extends Controller
         }
 
         $data['user'] = DB::table('users')->find($user_id);
-        $data['roles'] = DB::table('roles')->get();
+        $data['roles'] = DB::table('roles')->where('id','!=', auth()->user()->role_id == 1 ? null : 1)->get();
 
         return view('backends.users.edit', $data);
     }
@@ -118,6 +123,10 @@ class UserController extends Controller
 
 
         if($r->hasFile('photo')){
+
+            if(Storage::disk('custom')->exists($oldUer->photo)){
+                Storage::disk('custom')->delete($oldUer->photo);
+            }
             $data['photo'] = $r->file('photo')->store('images/photo','custom');
   
         }

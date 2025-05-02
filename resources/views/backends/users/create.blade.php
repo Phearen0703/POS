@@ -12,7 +12,7 @@
         <div class="card-body">
             <a href="{{route('admin.user')}}" class="btn btn-danger"><i class="bi bi-reply"></i> {{__('Back')}}</a>
 
-            <form action="{{route('admin.user.store')}}" class="my-2" method="POST">
+            <form action="{{route('admin.user.store')}}" class="my-2" method="POST" enctype="multipart/form-data">
                 @csrf
                     <div class="row">
                         <div class="col-lg-6 col-12">
@@ -23,6 +23,10 @@
                             <div class="mb-3">
                                 <label for="username">{{__('Username')}} <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="photo">{{__('Photo')}}</label>
+                                <input type="file" class="form-control" name="photo" id="photo" accept="image/*">
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
@@ -43,6 +47,7 @@
                                 <label for="password">{{__('Password')}}<span class="text-danger">*</span></label>
                                 <input type="password" class="form-control" name="password" required>
                             </div>
+
 
                         </div>
 

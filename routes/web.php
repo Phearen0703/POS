@@ -56,6 +56,9 @@ Route::post('/user/store', 'UserController@store')->name('admin.user.store')->mi
 
 
 
+//company
+Route::get('/company', 'CompanyController@index')->name('admin.company')->middleware('UserPermission:company,view');
+
 
 //no permission
 Route::get('/admin.no_permission', function () {
