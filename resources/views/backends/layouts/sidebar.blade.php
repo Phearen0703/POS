@@ -1,11 +1,15 @@
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
 
     <div class="sidebar-brand">
-        <a href="./index.html" class="brand-link">
-            <img src="{{asset('adminlte/dist/assets/img/AdminLTELogo.png')}}" alt="AdminLTE Logo"
-                class="brand-image opacity-75 shadow">
-            <span class="brand-text fw-light">AdminLTE 4</span>
+        <a href="{{ route('admin.home') }}" class="d-flex align-items-center text-decoration-none px-3 py-2">
+            <img src="{{ asset(company()->photo ?? '/images/photo/no_pic.png') }}" 
+                 alt="Company Logo"
+                 class="rounded-circle shadow-sm me-2"
+                 style="width: 50px; height: 50px; object-fit: cover;">
+            
+            <span class="fw-semibold text-light">{{ company()->name }}</span>
         </a>
+        
     </div>
     <div class="sidebar-wrapper">
 
@@ -75,9 +79,11 @@
                         'admin.role.create',
                         'admin.user',
                         'admin.user.create',
+                        'admin.user.edit',
                         'admin.role.permission',
+                        'admin.role.edit',
                         'admin.company',
-                        'admin.company.create',
+                        'admin.company.edit',
 
                     ]
                 @endphp
@@ -98,6 +104,7 @@
                         <li class="nav-item"> <a href="{{route('admin.role')}}" class="nav-link {{
                                 request()->route()->getName() == 'admin.role' ||
                                 request()->route()->getName() == 'admin.role.create' ||
+                                request()->route()->getName() == 'admin.role.edit' ||
                                 request()->route()->getName() == 'admin.role.permission' ? 'active' : '' 
                             }}"> <i class="bi bi-arrow-right-square-fill"></i></i>
                                 <p>{{__('Role')}}</p>
@@ -110,6 +117,7 @@
 
                         <li class="nav-item"> <a href="{{route('admin.user')}}" class="nav-link {{
                                 request()->route()->getName() == 'admin.user' ||
+                                request()->route()->getName() == 'admin.user.edit' ||
                                 request()->route()->getName() == 'admin.user.create' ? 'active' : ''
                             }}"> <i class="bi bi-arrow-right-square-fill"></i></i>
                                 <p>{{__('User')}}</p>
@@ -119,6 +127,7 @@
                         @if (checkPermission('company', 'view'))
 
                         <li class="nav-item"> <a href="{{route('admin.company')}}" class="nav-link {{
+                                request()->route()->getName() == 'admin.company.edit' ||
                                 request()->route()->getName() == 'admin.company' ? 'active' : ''
                             }}"> <i class="bi bi-buildings-fill"></i></i>
                                 <p>{{__('Company')}}</p>

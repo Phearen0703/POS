@@ -20,7 +20,16 @@ Route::group(['prefix' => '/admin'], function () {
 //backend or admin
 Route::group(['namespace'=>'App\Http\Controllers\Backends', 'prefix'=>'/admin', 'middleware'=>[ActiveUser::class]], function () {
     Route::get('/', 'HomeController@index')->name('admin.home');
+
+
+
+
+    //product
     Route::get('/product', 'ProductController@index')->name('admin.product')->middleware('UserPermission:product,view');
+
+
+
+    //product category
     Route::get('/product/category', 'ProductCategoryController@index')->name('admin.product.category')->middleware('UserPermission:prodcuct_category,view');
 
 
@@ -58,6 +67,8 @@ Route::post('/user/store', 'UserController@store')->name('admin.user.store')->mi
 
 //company
 Route::get('/company', 'CompanyController@index')->name('admin.company')->middleware('UserPermission:company,view');
+Route::get('/company/edit', 'CompanyController@edit')->name('admin.company.edit')->middleware('UserPermission:company,edit');
+Route::post('/company/update', 'CompanyController@update')->name('admin.company.update')->middleware('UserPermission:company,edit');
 
 
 //no permission

@@ -14,7 +14,7 @@ class RoleController extends Controller
 
 
 
-        $data['roles'] = DB::table('roles')->paginate(10);
+        $data['roles'] = DB::table('roles')->where('id','!=', auth()->user()->role_id == 1 ? null : 1)->paginate(10);
 
         return view('backends.roles.index',$data);
     }

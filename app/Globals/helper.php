@@ -31,4 +31,9 @@
         $user = DB::table('users')->find($user_id);
         return $user;
     }
+
+    function company(){
+        
+        return  DB::table('companies')->find(1);
+    }
 ?>

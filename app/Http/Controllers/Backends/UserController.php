@@ -141,6 +141,13 @@ class UserController extends Controller
     }
 
     public function delete($user_id){
+
+        $old = DB::table('users')->find($user_id);
+        if(Storage::disk('custom')->exists($old->photo)){
+            Storage::disk('custom')->delete($old->photo);
+        }   
+
+
         $d = DB::table('users')->where('id', $user_id)->delete();
 
         if($d == true){
