@@ -34,7 +34,12 @@
                 @php
                     $productmanagements = [
                         'admin.product.category',
-                        'admin.product'
+                        'admin.product',
+                        'admin.product.create',
+                        'admin.product.edit',
+                        'admin.product_category.create',
+                        'admin.product_category.edit',
+
                     ]
                 @endphp
 
@@ -54,7 +59,10 @@
 
 
                             <li class="nav-item"> <a href="{{route('admin.product.category')}}"
-                                    class="nav-link {{request()->route()->getName() == 'admin.product.category' ? 'active' : ''}}">
+                                    class="nav-link {{request()->route()
+                                        ->getName() == 'admin.product.category' ||
+                                        'admin.product_category.create'||
+                                        'admin.product_category.edit' ? 'active' : ''}}">
                                     <i class="nav-icon bi bi-house "></i>
                                     <p>{{__('Product Category')}}</p>
                                 </a> </li>

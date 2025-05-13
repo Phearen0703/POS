@@ -31,6 +31,11 @@ Route::group(['namespace'=>'App\Http\Controllers\Backends', 'prefix'=>'/admin', 
 
     //product category
     Route::get('/product/category', 'ProductCategoryController@index')->name('admin.product.category')->middleware('UserPermission:prodcuct_category,view');
+    Route::get('/product/category/create', 'ProductCategoryController@create')->name('admin.product_category.create')->middleware('UserPermission:prodcuct_category,create');
+    Route::post('/product/category/store', 'ProductCategoryController@store')->name('admin.product_category.store')->middleware('UserPermission:prodcuct_category,create');
+    Route::get('/product/category/{category_id}/edit', 'ProductCategoryController@edit')->name('admin.product_category.edit')->middleware('UserPermission:prodcuct_category,edit');
+    Route::post('/product/category/{category_id}/update', 'ProductCategoryController@update')->name('admin.product_category.update')->middleware('UserPermission:prodcuct_category,edit');
+    Route::get('/product/category/{category_id}/delete', 'ProductCategoryController@delete')->name('admin.product_category.delete')->middleware('UserPermission:prodcuct_category,delete');
 
 
 //role

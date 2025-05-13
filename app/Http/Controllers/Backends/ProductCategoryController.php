@@ -16,4 +16,50 @@ class ProductCategoryController extends Controller
 
         return view('backends.product_categories.index', $data);
     }
+    public function create(){
+        return view('backends.product_categories.create');
+    }
+    public function store(Request $r){
+        
+        $data = $r->except('_token');
+
+        $i = DB::table('product_categories')->insert($data);
+        $sms = ['status'=>'error','sms'=>'Insert Failed'];
+        if($i){
+            $sms = ['status'=>'success','sms'=>'Insert Success'];
+        }
+        return redirect()->route('admin.product.category')->with($sms);
+        
+    }
+    public function edit($category_id){
+
+        $data['product_category'] = DB::table('product_categories')->find($category_id);
+        if(!$data['product_category']){
+            return redirect()->route('admin.product.category')->with(['status'=>'error','sms'=>'Product Category not found']);
+        }
+        
+        return view('backends.product_categories.edit', $data);
+    }
+    public function update(Request $r, $category_id){
+
+        $data = $r->except('_token');
+
+        $u = DB::table('product_categories')->where('id', $category_id)->update($data);
+        $sms = ['status'=>'error','sms'=>'Update Failed'];
+        if($u){
+            $sms = ['status'=>'success','sms'=>'Update Success'];
+        }
+        return redirect()->route('admin.product.category')->with($sms);
+        
+    }
+    public function delete($category_id){
+
+        $d = DB::table('product_categories')->where('id', $category_id)->delete();
+        $sms = ['status'=>'error','sms'=>'Delete Failed'];
+        if($d){
+            $sms = ['status'=>'success','sms'=>'Delete Success'];
+        }
+        return redirect()->route('admin.product.category')->with($sms);
+        
+    }
 }
