@@ -7,7 +7,7 @@
 @section('content')
     <div class="card">
         <div class="card-header text-primary">
-            <h2><i class="bi bi-person"></i> {{__('Product Category')}}</h2>
+            <h2><i class="bi bi-folder me-2"></i> {{__('Product Category')}}</h2>
         </div>
         <div class="card-header">
             @if (checkPermission('prodcuct_category', 'create'))

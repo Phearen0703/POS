@@ -7,7 +7,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h2 class="text-primary"><i class="bi bi-person"></i> {{__("Edit Product Category")}}</h2>
+            <h2 class="text-primary"><i class="bi bi-folder2-open me-2"></i></i> {{__("Edit Product Category")}}</h2>
         </div>
         <div class="card-body">
             <a href="{{route('admin.product.category')}}" class="btn btn-danger"><i class="bi bi-reply"></i> {{__('Back')}}</a>
