@@ -10,7 +10,7 @@
             <h2><i class="bi bi-person-check"></i> {{__('Role Permission')}}</h2>
         </div>
         <div class="card-header">
-            <a href="{{route('admin.permission')}}" class="btn btn-danger "><i class="bi bi-reply"></i> {{__('Back')}}</a>
+            <a href="{{route('admin.role')}}" class="btn btn-danger "><i class="bi bi-reply"></i> {{__('Back')}}</a>
 
         </div>
         <div class="card-body">

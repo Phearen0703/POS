@@ -28,14 +28,14 @@ class ProductCategoryController extends Controller
         if($i){
             $sms = ['status'=>'success','sms'=>'Insert Success'];
         }
-        return redirect()->route('admin.product.category')->with($sms);
+        return redirect()->route('admin.product_category')->with($sms);
         
     }
     public function edit($category_id){
 
         $data['product_category'] = DB::table('product_categories')->find($category_id);
         if(!$data['product_category']){
-            return redirect()->route('admin.product.category')->with(['status'=>'error','sms'=>'Product Category not found']);
+            return redirect()->route('admin.product_category')->with(['status'=>'error','sms'=>'Product Category not found']);
         }
         
         return view('backends.product_categories.edit', $data);
@@ -49,17 +49,25 @@ class ProductCategoryController extends Controller
         if($u){
             $sms = ['status'=>'success','sms'=>'Update Success'];
         }
-        return redirect()->route('admin.product.category')->with($sms);
+        return redirect()->route('admin.product_category')->with($sms);
         
     }
     public function delete($category_id){
 
+        $find = DB::table('product_categories')->find($category_id);
+        if(!$find){
+            return redirect()->route('admin.product_category')->with(['status'=>'error','sms'=>'Product Category not found']);
+        }
+        $findBelongToProduct = DB::table('products')->where('product_category_id', $category_id)->exists();
+        if($findBelongToProduct){
+            return redirect()->route('admin.product_category')->with(['status'=>'warning','sms'=>'Product Category is used by Product, please delete the product first']);
+        }
         $d = DB::table('product_categories')->where('id', $category_id)->delete();
         $sms = ['status'=>'error','sms'=>'Delete Failed'];
         if($d){
             $sms = ['status'=>'success','sms'=>'Delete Success'];
         }
-        return redirect()->route('admin.product.category')->with($sms);
+        return redirect()->route('admin.product_category')->with($sms);
         
     }
 }

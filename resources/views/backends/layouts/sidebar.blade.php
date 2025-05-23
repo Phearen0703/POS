@@ -33,7 +33,7 @@
 
                 @php
                     $productmanagements = [
-                        'admin.product.category',
+                        'admin.product_category',
                         'admin.product',
                         'admin.product.create',
                         'admin.product.edit',
@@ -58,11 +58,10 @@
                         @if (checkPermission('prodcuct_category', 'view'))
 
 
-                            <li class="nav-item"> <a href="{{route('admin.product.category')}}"
-                                    class="nav-link {{request()->route()
-                                        ->getName() == 'admin.product.category' ||
-                                        'admin.product_category.create'||
-                                        'admin.product_category.edit' ? 'active' : ''}}">
+                            <li class="nav-item"> <a href="{{route('admin.product_category')}}"
+                                    class="nav-link {{request()->route()->getName() == 'admin.product_category' ||
+                                         request()->route()->getName() =='admin.product_category.create'||
+                                         request()->route()->getName() =='admin.product_category.edit' ? 'active' : ''}}">
                                     <i class="nav-icon bi bi-house "></i>
                                     <p>{{__('Product Category')}}</p>
                                 </a> </li>
@@ -71,7 +70,9 @@
                         
                         @if(checkPermission('product', 'view'))
                         <li class="nav-item"> <a href="{{route('admin.product')}}"
-                                class="nav-link {{request()->route()->getName() == 'admin.product' ? 'active' : ''}}">
+                                class="nav-link {{request()->route()->getName() == 'admin.product' ||
+                                    request()->route()->getName() =='admin.product.create'||
+                                    request()->route()->getName() =='admin.product.edit' ? 'active' : ''}}">
                                 <i class="nav-icon bi bi-house "></i>
                                 <p>{{__('Product Page')}}</p>
                             </a> </li>

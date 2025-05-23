@@ -35,7 +35,7 @@ Route::group(['prefix' => '/admin'], function () {
 
 
     //product category
-    Route::get('/product/category', 'ProductCategoryController@index')->name('admin.product.category')->middleware('UserPermission:prodcuct_category,view');
+    Route::get('/product/category', 'ProductCategoryController@index')->name('admin.product_category')->middleware('UserPermission:prodcuct_category,view');
     Route::get('/product/category/create', 'ProductCategoryController@create')->name('admin.product_category.create')->middleware('UserPermission:prodcuct_category,create');
     Route::post('/product/category/store', 'ProductCategoryController@store')->name('admin.product_category.store')->middleware('UserPermission:prodcuct_category,create');
     Route::get('/product/category/{category_id}/edit', 'ProductCategoryController@edit')->name('admin.product_category.edit')->middleware('UserPermission:prodcuct_category,edit');
@@ -79,6 +79,17 @@ Route::group(['prefix' => '/admin'], function () {
     Route::get('/company', 'CompanyController@index')->name('admin.company')->middleware('UserPermission:company,view');
     Route::get('/company/edit', 'CompanyController@edit')->name('admin.company.edit')->middleware('UserPermission:company,edit');
     Route::post('/company/update', 'CompanyController@update')->name('admin.company.update')->middleware('UserPermission:company,edit');
+
+
+    //banner
+    Route::get('/banner', 'BulkController@index')->name('admin.banner')->middleware('UserPermission:banner,view');
+    Route::get('/banner/create', 'BulkController@create')->name('admin.banner.create')->middleware('UserPermission:banner,create');
+    Route::get('/banner/{banner_id}/edit', 'BulkController@edit')->name('admin.banner.edit')->middleware('UserPermission:banner,edit');
+
+    //buik controller
+    Route::post('/bulk/store', 'BulkController@store')->name('admin.banner.store');
+    Route::post('/bulk/{bulk_id}/update', 'BulkController@update')->name('admin.banner.update');
+    Route::get('/bulk/{bulk_id}/delete', 'BulkController@delete')->name('admin.banner.delete');
 
 
     //no permission

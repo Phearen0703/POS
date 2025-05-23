@@ -7,13 +7,25 @@
 @section('content')
     <div class="card">
         <div class="card-header text-primary">
-            <h2><i class="bi bi-folder me-2"></i> {{__('Product')}}</h2>
+            <h2><i class="bi bi-folder me-2"></i> {{__('Products')}}</h2>
         </div>
         <div class="card-header">
             @if (checkPermission('product', 'create'))
                 <a href="{{route('admin.product.create')}}" class="btn btn-primary "><i class="bi bi-plus"></i>
                     {{__('Create')}}</a>
             @endif
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-3">
+                    <form action="{{route('admin.product')}}" method="GET">
+                        <div class="input-group">
+                            <input type="search" name="search" class="form-control" placeholder="{{__('Search')}}"
+                                value="{{request('search')}}">
+                            <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> {{__('Search')}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <div class="table-responsive my-2">
                 <table class="table table-sm table-hover table-bordered text-center">
@@ -22,31 +34,34 @@
                             <th>#</th>
                             <th>{{__('Category')}}</th>
                             <th>{{__('Name')}}</th>
+                            <th>{{__('Price')}}</th>
                             <th>{{__('Note')}}</th>
                             <th>{{__('Action')}}</th>
 
                         </tr>
                     </thead>
                     <tbody style="vertical-align: middle">
-                        @foreach ($product_categories as $index => $product_cat)
+                        @foreach ($products as $index => $product)
                             <tr>
                                 <td>{{$index + 1}}</td>
-                                <td class="text-start">{{$product_cat->name}}</td>
-                                <td>{{$product_cat->note}}</td>
+                                <td class="text-start">{{$product->product_category_name}}</td>
+                                <td class="text-start">{{$product->name}}</td>
+                                <td class="text-start">$ {{number_format($product->price,2)}}</td>
+                                <td>{{$product->note}}</td>
 
                                 <td>
-                                    @if (checkPermission('prodcuct_category', 'edit'))
-                                        <a href="{{ route('admin.product_category.edit', $product_cat->id) }}"
+                                    @if (checkPermission('product', 'edit'))
+                                        <a href="{{ route('admin.product.edit', $product->id) }}"
                                             class="btn btn-sm btn-success">
                                             <i class="bi bi-pencil-square"></i> {{ __('Edit') }}
                                         </a>
                                     @endif
 
-                                    @if (checkPermission('prodcuct_category', 'delete'))
+                                    @if (checkPermission('product', 'delete'))
 
                                         @php
                                             $btnDelete = '<div class="d-flex justify-content-center gap-2">';
-                                            $btnDelete .= '<a href="' . route('admin.product_category.delete', $product_cat->id) . '" class="btn btn-sm btn-danger">' . __('Yes') . '</a>';
+                                            $btnDelete .= '<a href="' . route('admin.product.delete', $product->id) . '" class="btn btn-sm btn-danger">' . __('Yes') . '</a>';
                                             $btnDelete .= '<span class="btn btn-sm btn-dark">' . __('No') . '</span>';
                                             $btnDelete .= '</div>';
                                         @endphp
@@ -71,7 +86,7 @@
 
                 <div class="row">
                     <div class="col">
-                        {{$product_categories->links('pagination::bootstrap-5')}}
+                        {{$products->links('pagination::bootstrap-5')}}
                     </div>
                 </div>
 

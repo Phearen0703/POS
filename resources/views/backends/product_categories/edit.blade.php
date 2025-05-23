@@ -10,9 +10,9 @@
             <h2 class="text-primary"><i class="bi bi-folder2-open me-2"></i></i> {{__("Edit Product Category")}}</h2>
         </div>
         <div class="card-body">
-            <a href="{{route('admin.product.category')}}" class="btn btn-danger"><i class="bi bi-reply"></i> {{__('Back')}}</a>
+            <a href="{{route('admin.product_category')}}" class="btn btn-danger"><i class="bi bi-reply"></i> {{__('Back')}}</a>
 
-            <form action="{{route('admin.product_category.store')}}" class="my-2" method="POST">
+            <form action="{{route('admin.product_category.update',$product_category->id)}}" class="my-2" method="POST">
                 @csrf
                     <div class="row">
                          <div class="col-md-6 mb-3">
